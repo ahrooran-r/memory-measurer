@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.ahrooranr</groupId>
+    <artifactId>memory-measurer</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>memory-measurer</name>
+    <description>
+        A small tool that is very handy when
+        e.g. you design data structures and want to see how much memory each one uses
+    </description>
+    <url>https://github.com/ahrooran-r/memory-measurer</url>
+
+    <developers>
+
+        <developer>
+            <name>Dimitris Andreou</name>
+            <id>DimitrisAndreou</id>
+            <url>https://github.com/DimitrisAndreou</url>
+            <email>jim.andreou@gmail.com</email>
+        </developer>
+
+        <developer>
+            <name>Michael Steindorfer</name>
+            <id>msteindorfer</id>
+            <url>https://github.com/msteindorfer</url>
+            <email>michael@steindorfer.name</email>
+            <timezone>+1:00</timezone>
+        </developer>
+
+        <developer>
+            <name>ahrooran</name>
+            <id>ahrooran-r</id>
+            <url>https://www.linkedin.com/in/ahrooran</url>
+            <email>ahrooran17@gmail.com</email>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>+5:30</timezone>
+        </developer>
+
+    </developers>
+
+    <properties>
+        <agentName>memory-measurer-javaagent</agentName>
+        <project.output>./dist</project.output>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile-java-8</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>8</release>
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                            <!--                            <archive>-->
+                            <!--                                <manifestEntries>-->
+                            <!--                                    <Premain-Class>objectexplorer.InstrumentationGrabber</Premain-Class>-->
+                            <!--                                </manifestEntries>-->
+                            <!--                            </archive>-->
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-java-11</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>11</release>
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-java-17</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>17</release>
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>${agentName}</finalName>
+                    <outputDirectory>${project.output}</outputDirectory>
+                    <archive>
+                        <manifestFile>
+                            ./src/main/resources/META-INF/MANIFEST.MF
+                        </manifestFile>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>
+                                com.github.ahrooranr.core.InstrumentationGrabber
+                            </mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.output}</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M9</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M9</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.15.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.9.1.2184</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.15.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

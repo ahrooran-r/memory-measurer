@@ -16,6 +16,18 @@
     </description>
     <url>https://github.com/ahrooran-r/memory-measurer</url>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/ahrooran-r/memory-measurer</url>
+    </scm>
+
     <developers>
 
         <developer>
@@ -85,11 +97,6 @@
                         <configuration>
                             <release>8</release>
                             <multiReleaseOutput>true</multiReleaseOutput>
-                            <!--                            <archive>-->
-                            <!--                                <manifestEntries>-->
-                            <!--                                    <Premain-Class>objectexplorer.InstrumentationGrabber</Premain-Class>-->
-                            <!--                                </manifestEntries>-->
-                            <!--                            </archive>-->
                         </configuration>
                     </execution>
                     <execution>
@@ -164,6 +171,21 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <sourcepath>src/main/java</sourcepath>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <pluginManagement>
@@ -204,6 +226,10 @@
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.5.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>

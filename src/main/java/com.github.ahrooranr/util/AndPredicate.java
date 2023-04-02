@@ -35,7 +35,7 @@ public class AndPredicate<T> implements Predicate<T>, Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof AndPredicate<?>) {
-            @SuppressWarnings("PatternVariableCanBeUsed") AndPredicate<?> that = (AndPredicate<?>) obj;
+            AndPredicate<?> that = (AndPredicate<?>) obj;
             return predicates.equals(that.predicates);
         }
         return false;

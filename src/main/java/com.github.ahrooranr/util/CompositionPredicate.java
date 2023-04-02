@@ -31,7 +31,7 @@ public class CompositionPredicate<A, B>
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof CompositionPredicate<?, ?>) {
-            @SuppressWarnings("PatternVariableCanBeUsed") CompositionPredicate<?, ?> that = (CompositionPredicate<?, ?>) obj;
+            CompositionPredicate<?, ?> that = (CompositionPredicate<?, ?>) obj;
             return function.equals(that.function) && predicate.equals(that.predicate);
         }
         return false;

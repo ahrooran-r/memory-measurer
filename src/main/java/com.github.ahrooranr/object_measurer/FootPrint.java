@@ -29,7 +29,7 @@ public class FootPrint {
     @Getter
     private final Map<Class<?>, Integer> primitives;
 
-    private static final Set<Class<?>> primitiveTypes = new HashSet<>(Arrays.asList(
+    public static final Set<Class<?>> primitiveTypes = new HashSet<>(Arrays.asList(
             boolean.class,
             char.class,
             byte.class,
